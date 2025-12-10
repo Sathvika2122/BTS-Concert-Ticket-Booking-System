@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manager Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #1b0044, #080014 70%);
+            color: white;
+            padding: 80px 20px;
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px #b46bff;
+        }
+
+        .add-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 12px 28px;
+            border-radius: 30px;
+            background: #b46bff;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 0 14px #b46bff;
+            transition: 0.35s;
+        }
+
+        .add-btn:hover {
+            background: #d9a6ff;
+            box-shadow: 0 0 28px #d9a6ff;
+            transform: translateY(-2px);
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(180,107,255,0.4);
+            border-radius: 12px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 20px rgba(160, 80, 255, 0.3);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        th {
+            background: rgba(180,107,255,0.2);
+            text-shadow: 0 0 5px #c77bff;
+        }
+
+        tr:nth-child(even) {
+            background: rgba(255,255,255,0.02);
+        }
+
+        a.action-link {
+            color: #b46bff;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        a.action-link:hover {
+            color: #d9a6ff;
+            text-shadow: 0 0 8px #d9a6ff;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: #d3b6ff;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .back-link:hover {
+            color: white;
+            text-shadow: 0 0 10px #c77bff;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Manager Panel</h2>
+
+<a class="add-btn" th:href="@{/manager/concerts/new}">➕ Add New Concert</a>
+
+<div class="table-container">
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Venue</th>
+            <th>City</th>
+            <th>Date & Time</th>
+            <th>VIP Price</th>
+            <th>General Price</th>
+            <th>Actions</th>
+        </tr>
+
+        <tr th:each="concert : ${concerts}">
+            <td th:text="${concert.title}"></td>
+            <td th:text="${concert.venue}"></td>
+            <td th:text="${concert.city}"></td>
+            <td th:text="${#temporals.format(concert.dateTime, 'MMM dd, yyyy hh:mm a')}"></td>
+            <td th:text="${concert.vipPrice}"></td>
+            <td th:text="${concert.generalPrice}"></td>
+            <td>
+                <a class="action-link" th:href="@{'/manager/concerts/edit/' + ${concert.id}}">Edit</a> |
+                <a class="action-link" th:href="@{'/manager/concerts/delete/' + ${concert.id}}"
+                   onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<a class="back-link" href="/">← Back Home</a>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${concert.title}">Concert Details</title>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #080014;
+            color: white;
+        }
+
+        /* Hero Banner with BTS Image */
+        .hero {
+            height: 100vh;
+            background: url('/images/bts_bg.jpg') center/cover no-repeat;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 40px;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(8,0,20,0.4), #080014 85%);
+        }
+
+        .hero h2 {
+            position: relative;
+            z-index: 2;
+            font-size: 3rem;
+            font-weight: 800;
+            text-shadow: 0 0 22px #c77bff;
+        }
+
+        /* Content Section */
+        .details-wrapper {
+            max-width: 800px;
+            margin: 50px auto;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(180, 107, 255, 0.4);
+            border-radius: 18px;
+            padding: 35px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 25px rgba(160, 80, 255, 0.4);
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin: 10px 0;
+        }
+
+        /* Book form */
+        form {
+            margin-top: 30px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            background: #1a0039;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 14px 38px;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            background: #b46bff;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 14px #b46bff;
+            transition: 0.35s;
+        }
+
+        button:hover {
+            background: #d9a6ff;
+            box-shadow: 0 0 24px #d9a6ff;
+            transform: translateY(-3px);
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 30px;
+            color: #d3b6ff;
+            text-decoration: none;
+            transition: .3s;
+        }
+
+        .back:hover {
+            color: white;
+            text-shadow: 0 0 10px #c77bff;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- BTS Hero Banner -->
+<div class="hero">
+    <h2 th:text="${concert.title}">Concert Title</h2>
+</div>
+
+<div class="details-wrapper">
+    <p><b>Venue:</b> <span th:text="${concert.venue}"></span></p>
+    <p><b>City:</b> <span th:text="${concert.city}"></span></p>
+    <p><b>Date & Time:</b> <span th:text="${#temporals.format(concert.dateTime,'MMM dd, yyyy hh:mm a')}"></span></p>
+    <p><b>Description:</b> <span th:text="${concert.description}"></span></p>
+
+    <form th:action="@{'/concerts/' + ${concert.id} + '/book'}" method="post">
+        <label><b>Choose Seat Type:</b></label>
+        <select name="seatType" required>
+            <option value="VIP" th:text="'VIP - $' + ${concert.vipPrice}"></option>
+            <option value="GENERAL" th:text="'General - $' + ${concert.generalPrice}"></option>
+        </select>
+
+        <button type="submit">🎟️ Book Ticket</button>
+    </form>
+
+    <a class="back" href="/concerts">← Back to Concerts</a>
+</div>
+
+</body>
+</html>
