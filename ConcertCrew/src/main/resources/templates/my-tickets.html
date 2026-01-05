@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>My Tickets</title>
+    <link rel="stylesheet" href="/css/app.css" th:href="@{/css/app.css}" />
+    <style>
+        /* small inline styles so it's usable immediately */
+        body { 
+            font-family: Arial, Helvetica, sans-serif; 
+            background:#0b0220; 
+            color:#fff; 
+            padding:28px; 
+        }
+        .card { 
+            background: rgba(255,255,255,0.03); 
+            padding:16px; 
+            border-radius:12px; 
+            margin-bottom:12px; 
+            border:1px solid rgba(255,255,255,0.04); 
+        }
+        .controls { 
+            display:flex; 
+            gap:10px; 
+            align-items:center; 
+        }
+        .btn { 
+            padding:8px 12px; 
+            border-radius:8px; 
+            text-decoration:none; 
+            color:#fff; 
+        }
+        .btn-danger { 
+            background:#c23a3a; 
+            border:none; 
+        }
+        .flash { 
+            margin-bottom:12px; 
+            padding:10px; 
+            border-radius:8px; 
+        }
+        .success { 
+            background: rgba(40,150,40,0.12); 
+            color:#b7ffb7; 
+        }
+        .error { 
+            background: rgba(200,50,50,0.08); 
+            color:#ffd2d2; 
+        }
+    </style>
+</head>
+<body>
+    <h1>My Tickets</h1>
+
+    <div th:if="${success}" class="flash success" th:text="${success}"></div>
+    <div th:if="${error}" class="flash error" th:text="${error}"></div>
+
+    <div th:if="${#lists.isEmpty(tickets)}">
+        <p>You have no booked tickets yet. <a th:href="@{/concerts}">Browse concerts</a></p>
+    </div>
+
+    <div th:each="ticket : ${tickets}">
+        <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center">
+                <div>
+                    <div style="font-weight:800; font-size:1.1em" th:text="${ticket.concert.title}">Concert Title</div>
+                    <div>
+                        Venue: <span th:text="${ticket.concert.venue}">Olympic Stadium</span> • 
+                        City: <span th:text="${ticket.concert.city}">Seoul</span>
+                    </div>
+                    <div>
+                        Seat: <span th:text="${ticket.seatType}">VIP</span> • 
+                        Price: $<span th:text="${ticket.price}">129</span>
+                    </div>
+                    <div>Booked at: <span th:text="${#temporals.format(ticket.bookingTime, 'yyyy-MM-dd HH:mm')}"></span></div>
+                    <div>Status: <span th:text="${ticket.status}">BOOKED</span></div>
+                </div>
+
+                <div class="controls">
+                    <form th:action="@{'/tickets/' + ${ticket.id} + '/delete'}" method="post" 
+                          onsubmit="return confirm('Cancel this ticket?');">
+                        <button type="submit" class="btn btn-danger">Cancel Booking</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

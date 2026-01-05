@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Concert Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #1b0044, #080014 70%);
+            color: white;
+            padding: 80px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .form-container {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(180,107,255,0.4);
+            border-radius: 20px;
+            padding: 40px;
+            width: 500px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 25px rgba(160, 80, 255, 0.4);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 0 0 15px #b46bff;
+        }
+
+        label {
+            display: block;
+            margin: 12px 0 6px;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="datetime-local"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            background: #1a0039;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            margin-top: 25px;
+            width: 100%;
+            padding: 14px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            background: #b46bff;
+            border: none;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0 14px #b46bff;
+            transition: 0.35s;
+        }
+
+        button:hover {
+            background: #d9a6ff;
+            box-shadow: 0 0 28px #d9a6ff;
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #d3b6ff;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .back-link:hover {
+            color: white;
+            text-shadow: 0 0 10px #c77bff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2 th:text="${concert.id == null} ? 'Add New Concert' : 'Edit Concert'">Add/Edit Concert</h2>
+
+    <form th:action="@{/manager/concerts/save}" th:object="${concert}" method="post">
+
+        <input type="hidden" th:field="*{id}"/>
+
+        <label>Title:</label>
+        <input type="text" th:field="*{title}" required />
+
+        <label>Venue:</label>
+        <input type="text" th:field="*{venue}" required />
+
+        <label>City:</label>
+        <input type="text" th:field="*{city}" required />
+
+        <label>Date & Time:</label>
+        <input type="datetime-local" th:field="*{dateTime}" required />
+
+        <label>VIP Price:</label>
+        <input type="number" step="0.01" th:field="*{vipPrice}" required />
+
+        <label>General Price:</label>
+        <input type="number" step="0.01" th:field="*{generalPrice}" required />
+
+        <label>VIP Capacity:</label>
+        <input type="number" th:field="*{vipCapacity}" required />
+
+        <label>General Capacity:</label>
+        <input type="number" th:field="*{generalCapacity}" required />
+
+        <label>Description:</label>
+        <textarea th:field="*{description}" rows="4"></textarea>
+
+        <button type="submit">Save Concert</button>
+    </form>
+
+    <a class="back-link" th:href="@{/manager/concerts}">← Back to Manager</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fan Registration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #1b0044, #080014 70%);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(180,107,255,0.4);
+            border-radius: 20px;
+            padding: 40px;
+            width: 400px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 25px rgba(160, 80, 255, 0.4);
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px #b46bff;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            background: #1a0039;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 14px 36px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            background: #b46bff;
+            border: none;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0 14px #b46bff;
+            transition: 0.35s;
+        }
+
+        button:hover {
+            background: #d9a6ff;
+            box-shadow: 0 0 28px #d9a6ff;
+            transform: translateY(-2px);
+        }
+
+        .login-link {
+            margin-top: 20px;
+            display: block;
+            color: #d3b6ff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .login-link:hover {
+            color: white;
+            text-shadow: 0 0 10px #c77bff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Fan Registration</h2>
+    <form th:action="@{/register}" th:object="${user}" method="post">
+        <input type="text" id="username" th:field="*{username}" placeholder="Username" required>
+        <input type="text" id="fullName" th:field="*{fullName}" placeholder="Full Name" required>
+        <input type="password" id="password" th:field="*{password}" placeholder="Password" required>
+        <button type="submit">Register</button>
+    </form>
+    <a class="login-link" th:href="@{/login}">Already registered? Login here</a>
+</div>
+
+</body>
+</html>

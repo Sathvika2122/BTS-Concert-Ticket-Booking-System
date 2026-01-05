@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>BTS Concerts</title>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #1b0044, #080014 60%);
+            color: #fff;
+            padding: 120px 40px 60px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-shadow: 0 0 15px #b46bff;
+        }
+
+        /* Grid layout */
+        .concert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            justify-content: center;
+        }
+
+        /* Neon Glass Cards */
+        .concert-card {
+            padding: 25px 30px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(184, 127, 255, 0.45);
+            box-shadow: 0 0 18px rgba(170, 90, 255, 0.25);
+            transition: 0.4s ease;
+        }
+
+        .concert-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 0 28px rgba(204, 137, 255, 0.55);
+            border-color: #d9a6ff;
+        }
+
+        .city {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 0 12px #d7b3ff;
+        }
+
+        .date {
+            font-size: 1.05rem;
+            opacity: 0.9;
+            margin-bottom: 18px;
+        }
+
+        .btn-details {
+            display: inline-block;
+            padding: 10px 26px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            background: #b46bff;
+            border-radius: 30px;
+            color: white;
+            box-shadow: 0 0 10px #b46bff;
+            transition: 0.35s;
+        }
+
+        .btn-details:hover {
+            background: #d9a6ff;
+            box-shadow: 0 0 20px #d9a6ff;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Upcoming BTS Concerts</h2>
+
+<div class="concert-grid">
+    <div class="concert-card" th:each="concert : ${concerts}">
+        <div class="city" th:text="${concert.city}">Seoul</div>
+        <div class="date" th:text="${#temporals.format(concert.dateTime, 'MMM dd, yyyy hh:mm a')}">
+            Dec 20, 2025 • 7:00 PM
+        </div>
+        <a class="btn-details" th:href="@{'/concerts/' + ${concert.id}}">View Details</a>
+    </div>
+</div>
+
+</body>
+</html>

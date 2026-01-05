@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Booking Successful</title>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #1b0044, #080014 60%);
+            color: white;
+            text-align: center;
+            padding: 120px 20px;
+            overflow-x: hidden;
+        }
+
+        h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            text-shadow: 0 0 20px #c77bff, 0 0 30px #b46bff, 0 0 40px #d9a6ff;
+            margin-bottom: 40px;
+        }
+
+        .ticket-card {
+            display: inline-block;
+            max-width: 450px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(180,107,255,0.4);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 25px rgba(160, 80, 255, 0.4);
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .ticket-card p {
+            font-size: 1.1rem;
+            margin: 12px 0;
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 32px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            background: #b46bff;
+            color: white;
+            box-shadow: 0 0 14px #b46bff;
+            transition: 0.35s;
+        }
+
+        .btn-back:hover {
+            background: #d9a6ff;
+            box-shadow: 0 0 28px #d9a6ff;
+            transform: translateY(-3px);
+        }
+
+        /* Confetti particles */
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #d9a6ff;
+            opacity: 0.8;
+            pointer-events: none;
+            border-radius: 50%;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<h2>Booking Successful 🎉</h2>
+
+<div class="ticket-card">
+    <p><b>Concert:</b> <span th:text="${ticket.concert.city}">Seoul</span></p>
+    <p><b>Seat Type:</b> <span th:text="${ticket.seatType}">VIP</span></p>
+    <p><b>Price:</b> <span th:text="${ticket.price}">$129</span></p>
+</div>
+
+<a class="btn-back" href="/concerts">Back to Concerts</a>
+
+<!-- Confetti particles container -->
+<div id="confetti-container"></div>
+
+<script>
+    // Generate random confetti
+    const confettiContainer = document.getElementById('confetti-container');
+    const particleCount = 80;
+
+    function createParticle() {
+        const p = document.createElement('div');
+        p.classList.add('particle');
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        p.style.background = `hsl(${Math.random() * 40 + 260}, 80%, 70%)`;
+        p.style.width = p.style.height = (Math.random() * 6 + 4) + 'px';
+        confettiContainer.appendChild(p);
+
+        setTimeout(() => {
+            p.remove();
+        }, 5000); // remove after animation
+    }
+
+    setInterval(createParticle, 150);
+</script>
+
+</body>
+</html>
